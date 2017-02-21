@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>sortwords.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;WoordenApplicatie&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">woordenapplicatie</a> &gt; <span class="el_source">sortwords.java</span></div><h1>sortwords.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package woordenapplicatie;
+
+import java.text.Normalizer;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import timeutil.TimeStamp;
+
+/**
+ *
+ * @author Jorrit
+ */
+<span class="fc" id="L24">public class sortwords {</span>
+    
+<span class="fc" id="L26">    TimeStamp Count = new TimeStamp();</span>
+<span class="fc" id="L27">    TimeStamp Sort = new TimeStamp();</span>
+<span class="fc" id="L28">    TimeStamp Frequence = new TimeStamp();</span>
+<span class="fc" id="L29">    TimeStamp Concordance = new TimeStamp();</span>
+    
+     public String[] getWords(String input) {
+<span class="fc" id="L32">        input = input.toLowerCase();</span>
+<span class="fc" id="L33">        input = Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll(&quot;[\\p{InCombiningDiacriticalMarks}]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L34">        return (input.split(&quot;[^a-zA-Z0-9]+&quot;));</span>
+    }
+     
+    public String countWords(String input)
+    {
+<span class="fc" id="L39">        Count.setBegin();</span>
+<span class="fc" id="L40">        int count = 0;</span>
+<span class="fc" id="L41">        Set&lt;String&gt; words = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for ( String s :  getWords(input)) {</span>
+<span class="fc" id="L43">            count++;</span>
+<span class="fc" id="L44">            words.add(s);</span>
+        }
+<span class="fc" id="L46">        Count.setEnd();</span>
+<span class="fc" id="L47">        System.out.println(Count.toString());</span>
+<span class="fc" id="L48">        return &quot;Unique: &quot; + words.size() + &quot; All: &quot; + count;</span>
+    }
+    
+    public String sortWords(String input)
+    {   
+<span class="fc" id="L53">        Sort.setBegin();</span>
+<span class="fc" id="L54">        TreeSet&lt;String&gt; words = new TreeSet&lt;&gt;(Collections.reverseOrder());</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for ( String s : getWords(input)) {</span>
+<span class="fc" id="L56">             words.add(s);</span>
+        }
+<span class="fc" id="L58">        Sort.setEnd();</span>
+<span class="fc" id="L59">        System.out.println(Sort.toString());</span>
+<span class="fc" id="L60">        return words.toString();</span>
+    }
+    
+    public String frequenceWords(String input)
+    {
+<span class="fc" id="L65">        Frequence.setBegin();</span>
+<span class="fc" id="L66">        Map&lt;String, Integer&gt; words = new HashMap();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for ( String s : getWords(input)) {</span>
+<span class="fc" id="L68">            Integer count = words.get(s);</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            if (count == null) {</span>
+<span class="fc" id="L70">                words.put(s,1);</span>
+            }
+            else {
+<span class="nc" id="L73">                words.put(s,count + 1);</span>
+            }
+        }
+        
+<span class="fc" id="L77">       List&lt;Map.Entry&lt;String, Integer&gt;&gt; gesorteerdeLijst = new LinkedList&lt;&gt;(words.entrySet());</span>
+        
+<span class="fc" id="L79">        Collections.sort(gesorteerdeLijst, new Comparator&lt;Map.Entry&lt;String, Integer&gt;&gt;()</span>
+<span class="fc" id="L80">        {</span>
+            @Override
+            public int compare(Map.Entry&lt;String, Integer&gt; o1,Map.Entry&lt;String, Integer&gt; o2)
+            {
+<span class="nc" id="L84">                return o1.getValue().compareTo(o2.getValue());</span>
+            }
+        });
+<span class="fc" id="L87">        Frequence.setEnd();</span>
+<span class="fc" id="L88">        System.out.println(Frequence.toString());</span>
+<span class="fc" id="L89">        return gesorteerdeLijst.toString();</span>
+    }
+    
+    public String concordanceWords(String rawInput)
+    {
+<span class="fc" id="L94">        Concordance.setBegin();</span>
+<span class="fc" id="L95">        Map&lt;String,Set&lt;Integer&gt;&gt; words = new HashMap();</span>
+<span class="fc" id="L96">        rawInput = rawInput.toLowerCase();    </span>
+<span class="fc" id="L97">        rawInput = Normalizer.normalize(rawInput, Normalizer.Form.NFD).replaceAll(&quot;[\\p{InCombiningDiacriticalMarks}]&quot;, &quot;&quot;);</span>
+<span class="fc" id="L98">        int lineCount = 0;</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (String l : rawInput.split(&quot;\n&quot;)) {</span>
+<span class="fc" id="L101">            lineCount++;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            for (String s : l.split(&quot;[^a-zA-Z0-9]+&quot;)) {</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                if (words.get(s) != null) { </span>
+<span class="nc" id="L104">                    words.get(s).add(lineCount);</span>
+                }
+                else{
+<span class="fc" id="L107">                    HashSet&lt;Integer&gt; hash = new HashSet();</span>
+<span class="fc" id="L108">                    hash.add(lineCount);</span>
+<span class="fc" id="L109">                    words.put(s, hash);</span>
+                }      
+            }
+             
+        }
+<span class="fc" id="L114">        Concordance.setEnd();</span>
+<span class="fc" id="L115">        System.out.println(Concordance.toString());</span>
+<span class="fc" id="L116">        return words.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
