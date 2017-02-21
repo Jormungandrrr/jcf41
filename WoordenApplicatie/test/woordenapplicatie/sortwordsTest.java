@@ -40,19 +40,6 @@ public class sortwordsTest {
     }
 
     /**
-     * Test of getWords method, of class sortwords.
-     */
-    @Test
-    public void testGetWords() {
-        System.out.println("getWords");
-        String input = "";
-        sortwords instance = new sortwords();
-        String[] expResult = null;
-        String[] result = instance.getWords(input);
-        assertArrayEquals(expResult, result);
-    }
-
-    /**
      * Test of countWords method, of class sortwords.
      */
     @Test
@@ -71,9 +58,9 @@ public class sortwordsTest {
     @Test
     public void testSortWords() {
         System.out.println("sortWords");
-        String input = "";
+        String input = "b a  g i k S";
         sortwords instance = new sortwords();
-        String expResult = "";
+        String expResult = "[s, k, i, g, b, a]";
         String result = instance.sortWords(input);
         assertEquals(expResult, result);
     }
@@ -84,13 +71,12 @@ public class sortwordsTest {
     @Test
     public void testFrequenceWords() {
         System.out.println("frequenceWords");
-        String input = "";
+        String input = "dit is een super coole test, test";
         sortwords instance = new sortwords();
-        String expResult = "";
+        String expResult = "[super=1, is=1, coole=1, dit=1, een=1, test=2]";
         String result = instance.frequenceWords(input);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -99,13 +85,39 @@ public class sortwordsTest {
     @Test
     public void testConcordanceWords() {
         System.out.println("concordanceWords");
-        String rawInput = "";
+        String rawInput = "dit is een super coole test, test\n" +"wazaaa test ";
         sortwords instance = new sortwords();
-        String expResult = "";
+        String expResult = "{super=[1], wazaaa=[2], test=[1, 2], is=[1], coole=[1], dit=[1], een=[1]}";
         String result = instance.concordanceWords(rawInput);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test onemillion words for each method
+     */
+    @Test
+    public void TestOnemillion() {
+        System.out.println("OneMillion");
+        String input = generateRandomWords(1000000);
+        sortwords instance = new sortwords();
+        instance.countWords(input);
+        instance.frequenceWords(input);
+        instance.sortWords(input);
+        instance.concordanceWords(input);
+    }
+    
+    /**
+     * Test HundredThousand words for each method
+     */
+    @Test
+    public void TestHundredThousand() {
+        System.out.println("HunderdThousand");
+        String input = generateRandomWords(100000);
+        sortwords instance = new sortwords();
+        instance.countWords(input);
+        instance.frequenceWords(input);
+        instance.sortWords(input);
+        instance.concordanceWords(input);
     }
     
      public String generateRandomWords(int numberOfWords) {

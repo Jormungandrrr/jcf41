@@ -74,9 +74,9 @@ public class sortwords {
             }
         }
         
-       List<Map.Entry<String, Integer>> gesorteerdeLijst = new LinkedList<>(words.entrySet());
+       List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(words.entrySet());
         
-        Collections.sort(gesorteerdeLijst, new Comparator<Map.Entry<String, Integer>>()
+        Collections.sort(sortedList, new Comparator<Map.Entry<String, Integer>>()
         {
             @Override
             public int compare(Map.Entry<String, Integer> o1,Map.Entry<String, Integer> o2)
@@ -86,7 +86,7 @@ public class sortwords {
         });
         Frequence.setEnd();
         System.out.println(Frequence.toString());
-        return gesorteerdeLijst.toString();
+        return sortedList.toString();
     }
     
     public String concordanceWords(String rawInput)
