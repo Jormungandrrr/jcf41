@@ -130,3 +130,14 @@ public class sortwords {
         return words.toString();
     }
 }
+
+/*       
+O(1): I know you there have my pen. Give it.
+
+O(n2): I question a student and ask them, "Does Jeff have the pen? No? Does Bob have the pen?" And so on, naming each student. If I don't get the answer from the first student, I move on to the next one. In the worst case I need to ask n2 questions - questioning each student about each other student.
+
+O(n): I ask each student if they have the pen. If not, I move on to the next one. In the worst case I need to ask n questions.
+
+O(log n): I divide the class in two, then ask: "Is it on the left side, or the right side of the classroom?" Then I take that group and divide it into two and ask again, and so on. In the worst case I need to ask log n questions.
+I might need to do the O(n2) search if only one student knows on which student the pen is hidden. I'd use the O(n) if one student had the pen and only they knew it. I'd use the O(log n) search if all the students knew, but would only tell me if I guessed the right name.
+*/ 
