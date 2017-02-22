@@ -30,10 +30,13 @@ public class sortwords {
     
      public String[] getWords(String input) {
         input = input.toLowerCase();
+        //The normalizer which transforms Unicode text into an equivalent composed or decomposed form, allowing for easier sorting and searching of text.
         input = Normalizer.normalize(input, Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
         return (input.split("[^a-zA-Z0-9]+"));
     }
      
+    // O(n) loops once through all elements in collection
+    // I chose to use a hashset because it automatically gets the unique values and it is faster because it is not sorted.
     public String countWords(String input)
     {
         Count.setBegin();
@@ -48,6 +51,9 @@ public class sortwords {
         return "Unique: " + words.size() + " All: " + count;
     }
     
+    // O(n) loops once through all elements in collection
+    // I chose to use a treeset because it automatically orders the words on aplhabethic order.
+    // The treeset uses binary search which is especially good for large quantity of words O(log n).
     public String sortWords(String input)
     {   
         Sort.setBegin();
@@ -60,6 +66,9 @@ public class sortwords {
         return words.toString();
     }
     
+    // O(n) loops once through all elements in collection
+    // I chose to use a HashMap because is the fastest with inputting elements in the map
+    // and because it combines two values in one map
     public String frequenceWords(String input)
     {
         Frequence.setBegin();
@@ -74,8 +83,8 @@ public class sortwords {
             }
         }
         
-       List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(words.entrySet());
-        
+        //overrides the comparator of the collection
+        List<Map.Entry<String, Integer>> sortedList = new LinkedList<>(words.entrySet());
         Collections.sort(sortedList, new Comparator<Map.Entry<String, Integer>>()
         {
             @Override
@@ -89,6 +98,11 @@ public class sortwords {
         return sortedList.toString();
     }
     
+    // O(2n) loops twice through all elements in collection
+    // I chose to use a HashMap because it is the best collection for input. I compared the time with th treemap and the hashset was faster.
+    // The map consists of a String (key) and HashSet (value).
+    // The hashset contains the integers of the line where the word is located.
+    // the hashset also only uses unique values so there will be no duplicates.
     public String concordanceWords(String rawInput)
     {
         Concordance.setBegin();
